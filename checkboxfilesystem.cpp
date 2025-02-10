@@ -3,7 +3,7 @@
 CheckboxFileSystemModel::CheckboxFileSystemModel(QObject *parent): QFileSystemModel{parent} {}
 
 QVariant CheckboxFileSystemModel::data(const QModelIndex &index, int role) const { // maybe set role default value to Viewable
-    if (role == Qt::CheckStateRole) {
+    if (role == Qt::CheckStateRole && index.column() == 0) {
         QString path = filePath(index);
         return m_checkStates.value(path, Qt::Unchecked);
     }
@@ -11,7 +11,7 @@ QVariant CheckboxFileSystemModel::data(const QModelIndex &index, int role) const
 }
 
 bool CheckboxFileSystemModel::setData(const QModelIndex &index, const QVariant &value, int role) {
-    if (role == Qt::CheckStateRole) {
+    if (role == Qt::CheckStateRole && index.column() == 0) {
         QString path = filePath(index);
         m_checkStates[path] = static_cast<Qt::CheckState>(value.toInt());
         emit dataChanged(index, index, {Qt::CheckStateRole});
@@ -21,7 +21,11 @@ bool CheckboxFileSystemModel::setData(const QModelIndex &index, const QVariant &
 }
 
 Qt::ItemFlags CheckboxFileSystemModel::flags(const QModelIndex &index) const {
-    return QFileSystemModel::flags(index) | Qt::ItemIsUserCheckable;
+    Qt::ItemFlags currFlags = QFileSystemModel::flags(index);
+    if (index.column() == 0) {
+        currFlags |= Qt::ItemIsUserCheckable;
+    }
+    return currFlags;
 }
 
 Qt::CheckState CheckboxFileSystemModel::checkState(const QString &path) const {
