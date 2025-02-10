@@ -2,6 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QPixmap>
+#include <QPushButton>
+#include <QFileDialog>
+
 #include "mediadialog.h"
 
 QT_BEGIN_NAMESPACE
@@ -23,5 +27,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    MediaDialog *fileWindow;
 };
 #endif // MAINWINDOW_H

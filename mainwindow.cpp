@@ -1,9 +1,7 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
-#include <QPixmap>
-#include <QPushButton>
-#include <QFileDialog>
+#include <QDir>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -20,11 +18,12 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 void MainWindow::on_browseButton_clicked() {
-    MediaDialog *test = new MediaDialog(this);
+    fileWindow = new MediaDialog(this);
     qDebug() << "This should show";
-    test->setAttribute(Qt::WA_DeleteOnClose);
-    test->open();
+    fileWindow->setAttribute(Qt::WA_DeleteOnClose);
+    fileWindow->show();
 }
+
 
 
 // static void initMediaDialog()
