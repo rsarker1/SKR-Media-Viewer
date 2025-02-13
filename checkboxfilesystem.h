@@ -22,7 +22,14 @@ public:
     QModelIndex indexFromPath(const QString &path) const;
 
 private:
-    QHash<QString, Qt::CheckState> m_checkStates; // Track checkboxes by file path
+    // Track checkboxes by file path
+    QHash<QString, Qt::CheckState> m_checkStates;
+    // Update checkboxes recursively when loaded
+    void propagateToChildren(const QModelIndex &parent, Qt::CheckState state);
+
+private slots:
+    // Dynamically update checkboxes of children
+    void onRowsInserted(const QModelIndex &parent, int first, int last);
 };
 
 #endif // CHECKBOXFILESYSTEM_H
