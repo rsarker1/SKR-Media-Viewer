@@ -2,7 +2,7 @@
 #define MEDIADIALOG_H
 
 #include <QDialog>
-#include <QFileSystemModel>
+#include "customfiletree.h"
 
 namespace Ui {
 class MediaDialog;
@@ -16,14 +16,15 @@ public:
     explicit MediaDialog(QWidget *parent = nullptr);
     ~MediaDialog();
 
-private slots:
+public slots:
     void on_buttonBox_rejected();
     void on_buttonBox_accepted();
 
+signals:
+    void selectedFiles(const QList<QFileInfo>& files);
+
 private:
     Ui::MediaDialog *ui;
-    QFileSystemModel *fileModel;
-    void setupFileSysModel();
 };
 
 #endif // MEDIADIALOG_H

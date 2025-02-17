@@ -19,11 +19,12 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-private slots:
+public slots:
     void on_browseButton_clicked();
+    void on_files_selected(const QList<QFileInfo>& files);
 
 private:
     Ui::MainWindow *ui;

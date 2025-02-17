@@ -4,6 +4,7 @@
 #include <QTreeView>
 #include "checkboxfilesystem.h"
 #include "folderordersort.h"
+#include "filemanager.h"
 
 class CustomFileTree : public QTreeView
 {
@@ -11,12 +12,11 @@ class CustomFileTree : public QTreeView
 public:
     explicit CustomFileTree(QWidget *parent = nullptr);
     void setRootPath(const QString &path);
+    const FileManager* getFileManager() { return m_fileManager; }
 
-protected slots:
-    // Handle selection changes (e.g., toggle checkboxes)
-    //void selectionChanged(const QItemSelection &selected, const QItemSelection &deselected) override;
 private:
     CheckboxFileSystemModel *m_fsm;
+    FileManager *m_fileManager;
     FolderOrderSort *m_sortProxy;
 };
 

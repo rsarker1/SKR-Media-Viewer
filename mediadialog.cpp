@@ -1,5 +1,4 @@
 #include "mediadialog.h"
-#include "customfiletree.h"
 #include "ui_mediadialog.h"
 
 #include <QDir>
@@ -8,19 +7,18 @@
 MediaDialog::MediaDialog(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::MediaDialog)
-    , fileModel(new QFileSystemModel(this))
 {
     ui->setupUi(this);
-    setupFileSysModel();
-}
 
-void MediaDialog::setupFileSysModel() {
+    connect(, &CheckboxFileSystemModel::fileChecked, mediaManager, &FileManager::addFile);
+    // connect(fileModel, &CheckboxFileSystemModel::fileUnchecked, mediaManager, &FileManager::removeFile);
     ui->fileTree->setRootPath(QDir::homePath());
 }
 
 void MediaDialog::on_buttonBox_accepted() {
     // QSet<QString> allPaths;
     qDebug() << "Accepted";
+    emit selectedFiles(mediaManager->files());
 }
 
 void MediaDialog::on_buttonBox_rejected() {

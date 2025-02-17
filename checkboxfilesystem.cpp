@@ -17,11 +17,19 @@ bool CheckboxFileSystemModel::setData(const QModelIndex &index, const QVariant &
         QString path = filePath(index);
         Qt::CheckState changeState = static_cast<Qt::CheckState>(value.toInt());
         m_checkStates[path] = changeState;
-
-        if (isDir(index)) {
+        emit dataChanged(index, index, {Qt::CheckStateRole});
+        if (!isDir(index)) {
+            if (changeState == Qt::Checked) {
+                qDebug() << "Emited fileChecked";
+                emit fileChecked(path);
+            }
+            else {
+                qDebug() << "Emited fileUnchecked";
+                emit fileUnchecked(path);
+            }
+        } else {
             propagateToChildren(index, changeState);
         }
-        emit dataChanged(index, index, {Qt::CheckStateRole});
         return true;
     }
     return QFileSystemModel::setData(index, value, role);
@@ -54,7 +62,14 @@ void CheckboxFileSystemModel::propagateToChildren(const QModelIndex &parent, Qt:
         m_checkStates[childPath] = state;
         emit dataChanged(child, child, {Qt::CheckStateRole});
 
-        if (isDir(child)) {
+        if (!isDir(child)) {
+            if (state == Qt::Checked) {
+                emit fileChecked(childPath);
+            }
+            else {
+                emit fileUnchecked(childPath);
+            }
+        } else {
             propagateToChildren(child, state);
         }
     }
@@ -74,5 +89,3 @@ void CheckboxFileSystemModel::onRowsInserted(const QModelIndex &parent, int firs
 QModelIndex CheckboxFileSystemModel::indexFromPath(const QString &path) const {
     return index(QDir(rootPath()).relativeFilePath(path));
 }
-
-// Need to lazily load the checkboxes for the future folders

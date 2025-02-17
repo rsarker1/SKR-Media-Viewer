@@ -2,13 +2,14 @@
 
 CustomFileTree::CustomFileTree(QWidget *parent)
     : QTreeView{parent}
+    , m_fsm(new CheckboxFileSystemModel(this))
+    , m_fileManager(new FileManager(this))
+    , m_sortProxy(new FolderOrderSort(this))
 {
     QStringList mediaFilters = {
         "*.png", "*.jpg", "*.jpeg", "*.gif", "*.webp",          // Images
         "*.mp4", "*.mov", "*.avi", "*.mkv", "*.wmv", "*.m4v"    // Videos
     };
-    m_fsm = new CheckboxFileSystemModel();
-    m_sortProxy = new FolderOrderSort();
 
     m_fsm->setFilter(QDir::AllDirs | QDir::Files | QDir::NoDotAndDotDot);
     m_fsm->setNameFilters(mediaFilters);
@@ -32,20 +33,5 @@ void CustomFileTree::setRootPath(const QString &path) {
     QModelIndex rootIndex = m_fsm->setRootPath(path);
     setRootIndex(m_sortProxy->mapFromSource(rootIndex));
 }
-// void CustomFileTree::selectionChanged(const QItemSelection &selected, const QItemSelection &deselected) {
-//     QTreeView::selectionChanged(selected, deselected);
 
-//     // Toggle checkboxes based on selection (assuming model supports CheckStateRole)
-//     QAbstractItemModel *model = this->model();
-//     if (!model) return;
-
-//     // Deselected items: Uncheck
-//     for (const QModelIndex &index : deselected.indexes()) {
-//         model->setData(index, Qt::Unchecked, Qt::CheckStateRole);
-//     }
-
-//     // Selected items: Check
-//     for (const QModelIndex &index : selected.indexes()) {
-//         model->setData(index, Qt::Checked, Qt::CheckStateRole);
-//     }
-// }
+// add connector to FileManager here

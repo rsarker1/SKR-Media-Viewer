@@ -6,10 +6,11 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    , fileWindow(new MediaDialog(this))
 {
     ui->setupUi(this);
     MainWindow::setWindowTitle("SKR");
-
+    connect(fileWindow, &MediaDialog::selectedFiles, this, &MainWindow::on_files_selected);
     // int w = ui->label_picture->width();
     // int h = ui->label_picture->height();
 
@@ -18,12 +19,19 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 void MainWindow::on_browseButton_clicked() {
-    fileWindow = new MediaDialog(this);
-    qDebug() << "This should show";
+    fileWindow->setWindowModality(Qt::ApplicationModal);
     fileWindow->setAttribute(Qt::WA_DeleteOnClose);
     fileWindow->show();
 }
 
+void MainWindow::on_files_selected(const QList<QFileInfo>& files) {
+    qDebug() << "Hey";
+    for (const QFileInfo &media : files) {
+        qDebug() << media.absoluteFilePath();
+        QPixmap picture(media.absoluteFilePath());
+        ui->label_picture->setPixmap(picture);
+    }
+}
 
 
 // static void initMediaDialog()

@@ -30,6 +30,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         customfiletree.h customfiletree.cpp
         checkboxfilesystem.h
         checkboxfilesystem.cpp
+        filemanager.h filemanager.cpp
 
     )
 # Define target properties for Android with Qt 6 as:
