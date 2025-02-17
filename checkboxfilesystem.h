@@ -33,7 +33,7 @@ signals:
 
 private:
     // Track checkboxes by file path
-    QHash<QString, Qt::CheckState> m_checkStates;
+    QHash<QString, Qt::CheckState> checkStates;
 
     // Update checkboxes recursively when loaded in model view
     void propagateToChildren(const QModelIndex &parent, Qt::CheckState state);

@@ -13,12 +13,12 @@ public:
     explicit CustomFileTree(QWidget *parent = nullptr);
 
     void setRootPath(const QString &path);
-    FileManager *getFileManager() { return m_fileManager; }
+    FileManager *getFileManager() { return fileManager; }
 
 private:
-    CheckboxFileSystemModel *m_fsm;
-    FileManager *m_fileManager;
-    FolderOrderSort *m_sortProxy;
+    CheckboxFileSystemModel *fileSystemModel;
+    FileManager *fileManager;
+    FolderOrderSort *sortProxy;
 
     void initCheckboxFileSystem();
 };

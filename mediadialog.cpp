@@ -29,5 +29,3 @@ MediaDialog::~MediaDialog()
 {
     delete ui;
 }
-
-// Use qSet to store file path strings

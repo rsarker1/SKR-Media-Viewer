@@ -7,7 +7,7 @@ CheckboxFileSystemModel::CheckboxFileSystemModel(QObject *parent): QFileSystemMo
 QVariant CheckboxFileSystemModel::data(const QModelIndex &index, int role) const { // maybe set role default value to Viewable
     if (role == Qt::CheckStateRole && index.column() == 0) {
         QString path = filePath(index);
-        return m_checkStates.value(path, Qt::Unchecked);
+        return checkStates.value(path, Qt::Unchecked);
     }
     return QFileSystemModel::data(index, role);
 }
@@ -16,7 +16,7 @@ bool CheckboxFileSystemModel::setData(const QModelIndex &index, const QVariant &
     if (role == Qt::CheckStateRole && index.column() == 0) {
         QString path = filePath(index);
         Qt::CheckState changeState = static_cast<Qt::CheckState>(value.toInt());
-        m_checkStates[path] = changeState;
+        checkStates[path] = changeState;
         emit dataChanged(index, index, {Qt::CheckStateRole});
         if (!isDir(index)) {
             if (changeState == Qt::Checked) {
@@ -36,11 +36,11 @@ bool CheckboxFileSystemModel::setData(const QModelIndex &index, const QVariant &
 }
 
 Qt::CheckState CheckboxFileSystemModel::checkState(const QString &path) const {
-    return m_checkStates.value(path, Qt::Unchecked);
+    return checkStates.value(path, Qt::Unchecked);
 }
 
 void CheckboxFileSystemModel::setCheckState(const QString &path, Qt::CheckState state) {
-    m_checkStates[path] = state;
+    checkStates[path] = state;
     QModelIndex index = indexFromPath(path);
     if (index.isValid()) {
         emit dataChanged(index, index, {Qt::CheckStateRole});
@@ -59,7 +59,7 @@ void CheckboxFileSystemModel::propagateToChildren(const QModelIndex &parent, Qt:
     for (int row = 0; row < rowCount(parent); ++row) {
         QModelIndex child = index(row, 0, parent);
         QString childPath = filePath(child);
-        m_checkStates[childPath] = state;
+        checkStates[childPath] = state;
         emit dataChanged(child, child, {Qt::CheckStateRole});
 
         if (!isDir(child)) {

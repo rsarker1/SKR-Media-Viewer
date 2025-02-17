@@ -4,23 +4,22 @@
 FileManager::FileManager(QObject *parent): QObject(parent) {}
 
 void FileManager::addFile(const QString &path) {
-    qDebug() << "Test";
     QFileInfo fileInfo(path);
-    if (!m_pathIndexMap.contains(fileInfo.absoluteFilePath())) {
-        m_files.append(fileInfo);
-        m_pathIndexMap[path] = m_files.size() - 1;
+    if (!pathIndexMap.contains(fileInfo.absoluteFilePath())) {
+        fileInfoList.append(fileInfo);
+        pathIndexMap[path] = fileInfoList.size() - 1;
     }
 }
 
 void FileManager::removeFile(const QString &path) {
-    if (m_pathIndexMap.contains(path)) {
-        int index = m_pathIndexMap[path];
-        m_files.removeAt(index);
-        m_pathIndexMap.remove(path);
+    if (pathIndexMap.contains(path)) {
+        int index = pathIndexMap[path];
+        fileInfoList.removeAt(index);
+        pathIndexMap.remove(path);
 
         // Update paths after removal
-        for (int i = index; i < m_files.size() - 1; ++i) {
-            m_pathIndexMap[m_files[i].absoluteFilePath()] = i;
+        for (int i = index; i < fileInfoList.size() - 1; ++i) {
+            pathIndexMap[fileInfoList[i].absoluteFilePath()] = i;
         }
     }
 }

@@ -17,15 +17,15 @@ public:
     Q_ENUM(SortCriteria);
     // Add Filter later?
     void sortBy(SortCriteria sortType);
-    const QList<QFileInfo> getFiles() { return m_files; }
+    const QList<QFileInfo> getFiles() { return fileInfoList; }
 
 public slots:
     void addFile(const QString &path);
     void removeFile(const QString &path);
 
 private:
-    QList<QFileInfo> m_files;
-    QHash<QString, int> m_pathIndexMap;
+    QList<QFileInfo> fileInfoList;
+    QHash<QString, int> pathIndexMap;
 };
 
 #endif // FILEMANAGER_H
