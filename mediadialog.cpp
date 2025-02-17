@@ -9,16 +9,16 @@ MediaDialog::MediaDialog(QWidget *parent)
     , ui(new Ui::MediaDialog)
 {
     ui->setupUi(this);
-
-    connect(, &CheckboxFileSystemModel::fileChecked, mediaManager, &FileManager::addFile);
-    // connect(fileModel, &CheckboxFileSystemModel::fileUnchecked, mediaManager, &FileManager::removeFile);
     ui->fileTree->setRootPath(QDir::homePath());
 }
 
 void MediaDialog::on_buttonBox_accepted() {
     // QSet<QString> allPaths;
     qDebug() << "Accepted";
-    emit selectedFiles(mediaManager->files());
+    FileManager *treeFileManager = ui->fileTree->getFileManager();
+    const QList<QFileInfo> checkedFiles = treeFileManager->getFiles();
+
+    emit selectedFiles(checkedFiles);
 }
 
 void MediaDialog::on_buttonBox_rejected() {

@@ -17,7 +17,7 @@ public:
     Q_ENUM(SortCriteria);
     // Add Filter later?
     void sortBy(SortCriteria sortType);
-    const QList<QFileInfo>& files() { return m_files; }
+    const QList<QFileInfo> getFiles() { return m_files; }
 
 public slots:
     void addFile(const QString &path);

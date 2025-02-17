@@ -11,13 +11,16 @@ class CustomFileTree : public QTreeView
     Q_OBJECT
 public:
     explicit CustomFileTree(QWidget *parent = nullptr);
+
     void setRootPath(const QString &path);
-    const FileManager* getFileManager() { return m_fileManager; }
+    FileManager *getFileManager() { return m_fileManager; }
 
 private:
     CheckboxFileSystemModel *m_fsm;
     FileManager *m_fileManager;
     FolderOrderSort *m_sortProxy;
+
+    void initCheckboxFileSystem();
 };
 
 #endif // CUSTOMFILETREE_H
