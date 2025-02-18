@@ -31,6 +31,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         checkboxfilesystem.h
         checkboxfilesystem.cpp
         filemanager.h filemanager.cpp
+        slideshow.h slideshow.cpp slideshow.ui
 
     )
 # Define target properties for Android with Qt 6 as:
