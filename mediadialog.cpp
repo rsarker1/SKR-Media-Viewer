@@ -9,6 +9,8 @@ MediaDialog::MediaDialog(QWidget *parent)
     , ui(new Ui::MediaDialog)
 {
     ui->setupUi(this);
+    setAttribute(Qt::WA_DeleteOnClose);
+    setWindowModality(Qt::ApplicationModal);
     ui->fileTree->setRootPath(QDir::homePath());
 }
 

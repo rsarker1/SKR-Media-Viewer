@@ -7,6 +7,7 @@
 #include <QFileDialog>
 
 #include "mediadialog.h"
+#include "slideshow.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -29,5 +30,6 @@ public slots:
 private:
     Ui::MainWindow *ui;
     MediaDialog *fileWindow;
+    Slideshow *slideshowWindow;
 };
 #endif // MAINWINDOW_H

@@ -6,6 +6,10 @@ Slideshow::Slideshow(QWidget *parent)
     , ui(new Ui::Slideshow)
 {
     ui->setupUi(this);
+    setWindowTitle("Slideshow");
+    setAttribute(Qt::WA_DeleteOnClose);
+    // setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
+    // setWindowState(Qt::WindowFullScreen);
 }
 
 Slideshow::~Slideshow()
